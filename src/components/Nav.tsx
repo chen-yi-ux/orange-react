@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import React from 'react';
-require('icons/detail.svg');
-require('icons/chart.svg');
+import {Icon} from './Icon';
 
 const NavWrapper = styled.nav`
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
@@ -35,9 +34,7 @@ const Nav = () => {
     <NavWrapper>
       <ul>
         <li>
-          <svg className="icon">
-            <use xlinkHref="#detail"/>
-          </svg>
+          <Icon name="detail"/>
           <Link to="/detail">
             明细
           </Link>
@@ -46,9 +43,7 @@ const Nav = () => {
           <Link to="/money">记一笔</Link>
         </li>
         <li>
-          <svg className="icon">
-            <use xlinkHref="#chart"/>
-          </svg>
+          <Icon name="chart"/>
           <Link to="/chart">图表</Link>
         </li>
       </ul>
