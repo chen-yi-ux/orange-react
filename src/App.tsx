@@ -1,6 +1,9 @@
 import React from 'react';
 import {Route, HashRouter as Router, Switch, Redirect} from 'react-router-dom';
-import {Layout} from 'components/Layout';
+import {Detail} from 'views/Detail';
+import {Chart} from 'views/Chart';
+import {Money} from 'views/Money';
+import {NoMatch} from 'views/NoMatch';
 
 function App() {
   return (
@@ -21,34 +24,6 @@ function App() {
         </Route>
       </Switch>
     </Router>
-  );
-}
-
-function NoMatch() {
-  return <div>页面不存在</div>;
-}
-
-function Money() {
-  return (
-    <Layout>
-      <div>money</div>
-    </Layout>
-  );
-}
-
-function Chart() {
-  return (
-    <Layout>
-      <div>chart</div>
-    </Layout>
-  );
-}
-
-function Detail() {
-  return (
-    <Layout>
-      <div>detail</div>
-    </Layout>
   );
 }
 
