@@ -1,58 +1,55 @@
 import React from 'react';
 import {Route, HashRouter as Router, Switch, Redirect} from 'react-router-dom';
-import styled from 'styled-components';
-import {Nav} from 'components/Nav';
-
-const Wrapper = styled.div`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
-const Main = styled.div`
-  flex-grow: 1;
-  overflow: auto;
-`;
+import {Layout} from 'components/Layout';
 
 function App() {
   return (
     <Router>
-      <Wrapper>
-        <Main>
-          <Switch>
-            <Route exact path="/money">
-              <Money />
-            </Route>
-            <Route exact path="/chart">
-              <Chart />
-            </Route>
-            <Route exact path="/detail">
-              <Detail />
-            </Route>
-            <Redirect exact from="/" to="/detail"/>
-            <Route path="*">
-              <NoMatch />
-            </Route>
-          </Switch>
-        </Main>
-
-        <Nav/>
-      </Wrapper>
+      <Switch>
+        <Route exact path="/money">
+          <Money/>
+        </Route>
+        <Route exact path="/chart">
+          <Chart/>
+        </Route>
+        <Route exact path="/detail">
+          <Detail/>
+        </Route>
+        <Redirect exact from="/" to="/detail"/>
+        <Route path="*">
+          <NoMatch/>
+        </Route>
+      </Switch>
     </Router>
   );
 }
 
-function NoMatch(){
-  return <div>页面不存在</div>
+function NoMatch() {
+  return <div>页面不存在</div>;
 }
 
-function Money(){
-  return <div>money</div>
+function Money() {
+  return (
+    <Layout>
+      <div>money</div>
+    </Layout>
+  );
 }
-function Chart(){
-  return <div>chart</div>
+
+function Chart() {
+  return (
+    <Layout>
+      <div>chart</div>
+    </Layout>
+  );
 }
-function Detail(){
-  return <div>detail</div>
+
+function Detail() {
+  return (
+    <Layout>
+      <div>detail</div>
+    </Layout>
+  );
 }
 
 export default App;
