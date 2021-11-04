@@ -1,5 +1,5 @@
 import {Icon} from 'components/Icon';
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
@@ -18,20 +18,21 @@ const Wrapper = styled.section`
 
   > .content {
     overflow: auto;
-    height: 227px;     //待定
+    height: 227px; //待定
 
     > ul {
       display: flex;
       flex-wrap: wrap;
       padding: 12px 0;
-      
+
       > li {
         width: 33.33333%;
         height: 85px;
         display: flex;
         justify-content: center;
         align-items: center;
-        > div{
+
+        > div {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -40,6 +41,7 @@ const Wrapper = styled.section`
           width: 90%;
           height: 75px;
           border-radius: 20px;
+
           &.selected {
             background: lavenderblush;
 
@@ -47,11 +49,13 @@ const Wrapper = styled.section`
               animation: shake 0.3s linear;
             }
           }
-          >.icon{
+
+          > .icon {
             width: 45px;
             height: 45px;
           }
         }
+
         @keyframes shake {
           0% {
             transform: rotate(0deg);
@@ -73,7 +77,21 @@ const Wrapper = styled.section`
     }
   }
 `;
-const LabelSection = () => {
+
+const defaultLabels = [
+  {name: '三餐', category: '-'},
+  {name: '衣服', category: '-'},
+  {name: '宠物', category: '-'},
+  {name: '医疗', category: '-'},
+  {name: '零食', category: '-'},
+  {name: '学习', category: '-'},
+  {name: '工资', category: '+'},
+  {name: '利息', category: '+'},
+  {name: '奖金', category: '+'},
+];
+const LabelSection: React.FC = () => {
+  const [label] = useState(defaultLabels);
+  const [selectedLabel, setSelectedLabel] = useState('三餐');
   return (
     <Wrapper>
       <div className="title">
@@ -82,60 +100,15 @@ const LabelSection = () => {
       </div>
       <div className="content">
         <ul>
-          <li>
-            <div className="selected">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="衣服"/>
-              <span>衣服</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="宠物"/>
-              <span>宠物</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="医疗"/>
-              <span>医疗</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="零食"/>
-              <span>零食</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="学习"/>
-              <span>学习</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="医疗"/>
-              <span>医疗</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="零食"/>
-              <span>零食</span>
-            </div>
-          </li>
-          <li>
-            <div>
-              <Icon name="学习"/>
-              <span>学习</span>
-            </div>
-          </li>
+          {label.map(item =>
+            <li key={item.name}>
+              <div className={selectedLabel === item.name ? 'selected' : ''}
+                   onClick={() => {setSelectedLabel(item.name);}}>
+                <Icon name={item.name}/>
+                <span>{item.name}</span>
+              </div>
+            </li>
+          )}
           <li>
             <div>
               <Icon name="设置"/>
