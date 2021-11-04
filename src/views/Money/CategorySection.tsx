@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
@@ -36,12 +36,22 @@ const Wrapper = styled.section`
     }
   }
 `;
-const CategorySection = () => {
+
+const CategorySection: React.FC = () => {
+  const categoryMap = {'-': '支出', '+': '收入'};
+  // type Keys = keyof typeof categoryMap
+  // const [categoryList] = useState<Keys[]>(['+', '-']);
+  const [categoryList] = useState<('-'|'+')[]>(['+', '-']);
+  const [category, setCategory] = useState('-');
   return (
     <Wrapper>
       <ul>
-        <li>收入</li>
-        <li className="selected">支出</li>
+        {categoryList.map(c =>
+          <li key={c} className={category === c ? 'selected' : ''}
+              onClick={() => {setCategory(c);}}
+          >{categoryMap[c]}
+          </li>
+        )}
       </ul>
     </Wrapper>
   );
