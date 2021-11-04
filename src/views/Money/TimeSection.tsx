@@ -1,6 +1,9 @@
 import {Icon} from 'components/Icon';
 import React from 'react';
 import styled from 'styled-components';
+import { DatePicker} from 'components';
+import dayjs from 'dayjs';
+import locale from 'antd/es/date-picker/locale/zh_CN';
 
 const Wrapper = styled.section`
   height: 60px;
@@ -9,7 +12,7 @@ const Wrapper = styled.section`
   border-bottom: 1px solid #e3e3e3;
   display: flex;
   align-items: center;
-
+  
   > span {
     padding-left: 5px;
     padding-right: 18px;
@@ -21,6 +24,7 @@ const TimeSection = () => {
     <Wrapper>
       <Icon name="time"/>
       <span>时间</span>
+      <DatePicker locale={locale} defaultValue={dayjs()}/>
     </Wrapper>
   );
 };
