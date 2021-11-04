@@ -33,44 +33,29 @@ function Money() {
     note: '',
     label: {name: '', category: '-'} as Label
   });
+  const onChange = (obj: Partial<typeof record>) => {
+    setRecord({
+      ...record,
+      ...obj
+    });
+  };
   return (
     <div className="mmm">
       <Header>
         <TitleSection/>
         <CategorySection value={record.category}
-                         onChange={(category) => {
-                           setRecord({
-                             ...record,
-                             category: category
-                           });
-                         }}/>
+                         onChange={(category) => onChange({category})}/>
       </Header>
       <Main>
         <AmountSection value={record.amount}
-                       onChange={(amount) => {
-                         setRecord({
-                           ...record,
-                           amount: parseFloat(amount)
-                         });
-                       }}/>
+                       onChange={(amount) => onChange({amount: parseFloat(amount)})}/>
         <TimeSection value={record.time}
-                     onChange={(time) => {
-                       setRecord({
-                         ...record,
-                       })
-                     }}/>
+                     onChange={(time) => onChange({time})}/>
         <NoteSection value={record.note}
-                     onChange={(note) => {
-                       setRecord({
-                         ...record,
-                         note: note
-                       })
-                     }}/>
+                     onChange={(note) => onChange({note})}/>
         <LabelSection value={record}
-                      onChange={(label, category) => setRecord({
-                        ...record,
-                        label: {name: label, category: category}
-                      })}/>
+                      onChange={(label, category) =>
+                        onChange({label: {name: label, category: category}})}/>
         <Button/>
       </Main>
     </div>
