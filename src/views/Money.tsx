@@ -10,14 +10,16 @@ import {Button} from './Money/Button';
 
 
 const Header = styled.section`
-  //height: 110px;
+  height: 110px;
 `;
 const Main = styled.section`
+  height: calc(100% - 110px);
   padding: 0 14px;
 `;
+
 function Money() {
   return (
-    <div>
+    <div className="mmm">
       <Header>
         <TitleSection/>
         <CategorySection/>
@@ -27,8 +29,8 @@ function Money() {
         <TimeSection/>
         <NoteSection/>
         <LabelSection/>
+        <Button/>
       </Main>
-      <Button/>
     </div>
   );
 }

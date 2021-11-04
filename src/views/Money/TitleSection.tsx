@@ -8,8 +8,7 @@ const Wrapper = styled.section`
   align-items: center;
   font-size: 24px;
   padding: 14px 10px;
-  height: 64px;
-
+  text-align: center; 
   > .icon {
     width: 24px;
     height: 24px;

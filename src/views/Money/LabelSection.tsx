@@ -120,6 +120,24 @@ const LabelSection = () => {
           </li>
           <li>
             <div>
+              <Icon name="医疗"/>
+              <span>医疗</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <Icon name="零食"/>
+              <span>零食</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <Icon name="学习"/>
+              <span>学习</span>
+            </div>
+          </li>
+          <li>
+            <div>
               <Icon name="设置"/>
               <span>设置</span>
             </div>

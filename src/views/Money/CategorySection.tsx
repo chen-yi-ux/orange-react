@@ -40,8 +40,8 @@ const CategorySection = () => {
   return (
     <Wrapper>
       <ul>
-        <li className="selected">收入</li>
-        <li>支出</li>
+        <li>收入</li>
+        <li className="selected">支出</li>
       </ul>
     </Wrapper>
   );

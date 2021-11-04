@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Wrapper = styled.section`
   height: 90px;
   padding-left: 4px;
-  padding-top: 24px;
+  padding-top: 18px;
   border-bottom: 1px solid #306ECC;
 
   > input {
@@ -14,7 +14,7 @@ const Wrapper = styled.section`
     color: #306ECC;
     background: none;
     outline: none;
-    border: 0;
+    border: none;
   }
 `;
 const AmountSection = () => {

@@ -17,6 +17,9 @@ a{
 }
 body{
   font-family: $font-hei;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .icon{
   width: 27px;
@@ -24,3 +27,8 @@ body{
   fill: currentColor;
   overflow: hidden;
 }
+.mmm{
+  height: 100vh;
+  //padding-bottom: 5px;
+}
+

@@ -9,8 +9,9 @@ const NavWrapper = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 0;
     > li {
-      width: 33.3333%;
+      width: 33.33%;
       text-align: center;
       font-size: 12px;
       padding: 4px 0;
