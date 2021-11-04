@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
@@ -18,9 +18,12 @@ const Wrapper = styled.section`
   }
 `;
 const AmountSection = () => {
+  const [amount, setAmount] = useState('');
   return (
     <Wrapper>
-      <input type="text" placeholder="0"/>
+      <input type="number" placeholder="0"
+             value={amount}
+             onChange={(e) => {setAmount(e.target.value);}}/>
     </Wrapper>
   );
 };
