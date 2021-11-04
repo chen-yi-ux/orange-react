@@ -1,5 +1,5 @@
 import {Icon} from 'components/Icon';
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
@@ -24,12 +24,15 @@ const Wrapper = styled.section`
     font-size: 20px;
   }
 `;
-const NoteSection = () => {
+const NoteSection: React.FC = () => {
+  const [note, setNote] = useState('');
   return (
     <Wrapper>
       <Icon name="note"/>
       <span>备注</span>
-      <input type="text" placeholder="..."/>
+      <input type="text" placeholder="..."
+             value={note}
+             onChange={(e) => {setNote(e.target.value)}}/>
     </Wrapper>
   );
 };
