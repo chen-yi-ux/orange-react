@@ -21,6 +21,7 @@ const Main = styled.section`
 
 type Label = {
   name: string,
+  svg: string,
   category: '-' | '+'
 }
 type Category = '-' | '+'
@@ -31,7 +32,7 @@ function Money() {
     amount: 0,
     time: dayjs(),
     note: '',
-    label: {name: '', category: '-'} as Label
+    label: {name: '', svg: '', category: '-'} as Label
   });
   const onChange = (obj: Partial<typeof record>) => {
     setRecord({
@@ -54,8 +55,8 @@ function Money() {
         <NoteSection value={record.note}
                      onChange={(note) => onChange({note})}/>
         <LabelSection value={record}
-                      onChange={(label, category) =>
-                        onChange({label: {name: label, category: category}})}/>
+                      onChange={(label, svg,category) =>
+                        onChange({label: {name: label, svg: svg, category: category}})}/>
         <Button/>
       </Main>
     </div>
