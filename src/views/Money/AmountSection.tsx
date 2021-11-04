@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef} from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
@@ -17,13 +17,23 @@ const Wrapper = styled.section`
     border: none;
   }
 `;
-const AmountSection = () => {
-  const [amount, setAmount] = useState('');
+
+type Props = {
+  value: number;
+  onChange: (newValue: string) => void
+}
+const AmountSection: React.FC<Props> = (props) => {
+  const refInput = useRef<HTMLInputElement>(null);
+  const onBlur = () => {
+    if(refInput.current !== null){
+      props.onChange(refInput.current.value);
+    }
+  }
   return (
     <Wrapper>
       <input type="number" placeholder="0"
-             value={amount}
-             onChange={(e) => {setAmount(e.target.value);}}/>
+             ref={refInput}
+             onBlur={onBlur} />
     </Wrapper>
   );
 };

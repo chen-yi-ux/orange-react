@@ -1,6 +1,7 @@
 import {Icon} from 'components/Icon';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
 const Wrapper = styled.section`
   > .title {
@@ -78,7 +79,11 @@ const Wrapper = styled.section`
   }
 `;
 
-const defaultLabels = [
+type Label = {
+  name: string,
+  category: '-' | '+'
+}
+const defaultLabels: Label[] = [
   {name: '三餐', category: '-'},
   {name: '衣服', category: '-'},
   {name: '宠物', category: '-'},
@@ -89,9 +94,25 @@ const defaultLabels = [
   {name: '利息', category: '+'},
   {name: '奖金', category: '+'},
 ];
-const LabelSection: React.FC = () => {
-  const [label] = useState(defaultLabels);
-  const [selectedLabel, setSelectedLabel] = useState('三餐');
+
+type Record = {
+  category: '-' | '+',
+  amount: number,
+  time: dayjs.Dayjs,
+  note: string,
+  label: { name: string, category: '-' | '+' }
+}
+type Props = {
+  value: Record;
+  onChange: (newValue: string, category: '-' | '+') => void;
+}
+const LabelSection: React.FC<Props> = (props) => {
+  const labelBlock = defaultLabels.filter(label => label.category === props.value.category);
+  const [selectedLabel, setSelectedLabel] = useState('');
+  const [label, setLabel] = useState(labelBlock);
+  useEffect(() => {
+    setLabel(labelBlock);
+  }, [props.value.category]);
   return (
     <Wrapper>
       <div className="title">
@@ -103,7 +124,10 @@ const LabelSection: React.FC = () => {
           {label.map(item =>
             <li key={item.name}>
               <div className={selectedLabel === item.name ? 'selected' : ''}
-                   onClick={() => {setSelectedLabel(item.name);}}>
+                   onClick={() => {
+                     setSelectedLabel(item.name);
+                     props.onChange(item.name, item.category);
+                   }}>
                 <Icon name={item.name}/>
                 <span>{item.name}</span>
               </div>

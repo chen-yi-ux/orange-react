@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {TitleSection} from './Money/TitleSection';
 import {CategorySection} from './Money/CategorySection';
@@ -7,6 +7,8 @@ import {TimeSection} from './Money/TimeSection';
 import {NoteSection} from './Money/NoteSection';
 import {LabelSection} from './Money/LabelSection';
 import {Button} from './Money/Button';
+import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 
 
 const Header = styled.section`
@@ -17,18 +19,58 @@ const Main = styled.section`
   padding: 0 14px;
 `;
 
+type Label = {
+  name: string,
+  category: '-' | '+'
+}
+type Category = '-' | '+'
+
 function Money() {
+  const [record, setRecord] = useState({
+    category: '-' as Category,
+    amount: 0,
+    time: dayjs(),
+    note: '',
+    label: {name: '', category: '-'} as Label
+  });
   return (
     <div className="mmm">
       <Header>
         <TitleSection/>
-        <CategorySection/>
+        <CategorySection value={record.category}
+                         onChange={(category) => {
+                           setRecord({
+                             ...record,
+                             category: category
+                           });
+                         }}/>
       </Header>
       <Main>
-        <AmountSection/>
-        <TimeSection/>
-        <NoteSection/>
-        <LabelSection/>
+        <AmountSection value={record.amount}
+                       onChange={(amount) => {
+                         setRecord({
+                           ...record,
+                           amount: parseFloat(amount)
+                         });
+                       }}/>
+        <TimeSection value={record.time}
+                     onChange={(time) => {
+                       setRecord({
+                         ...record,
+                       })
+                     }}/>
+        <NoteSection value={record.note}
+                     onChange={(note) => {
+                       setRecord({
+                         ...record,
+                         note: note
+                       })
+                     }}/>
+        <LabelSection value={record}
+                      onChange={(label, category) => setRecord({
+                        ...record,
+                        label: {name: label, category: category}
+                      })}/>
         <Button/>
       </Main>
     </div>

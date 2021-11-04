@@ -1,5 +1,5 @@
 import {Icon} from 'components/Icon';
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {DatePicker} from 'components';
 import dayjs, {Dayjs} from 'dayjs';
@@ -19,11 +19,15 @@ const Wrapper = styled.section`
     color: #636363;
   }
 `;
-const TimeSection: React.FC = () => {
-  const [time, setTime] = useState(dayjs());
+
+type Props = {
+  value: dayjs.Dayjs;
+  onChange: (newValue: dayjs.Dayjs) => void
+}
+const TimeSection: React.FC<Props> = (props) => {
   const onChange = (e: Dayjs | null) => {
     if (e !== null) {
-      setTime(e);
+      props.onChange(e);
     }
   };
   return (
@@ -31,7 +35,7 @@ const TimeSection: React.FC = () => {
       <Icon name="time"/>
       <span>时间</span>
       <DatePicker locale={locale}
-                  value={time}
+                  value={props.value}
                   onChange={onChange}/>
     </Wrapper>
   );
