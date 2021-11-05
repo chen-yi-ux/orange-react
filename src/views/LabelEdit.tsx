@@ -1,5 +1,7 @@
 import {Icon} from 'components/Icon';
 import styled from 'styled-components';
+import React from 'react';
+import {useLabel} from '../lib/useLabel';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -91,8 +93,11 @@ const Button = styled.div`
     width: 23px;
     height: 23px;
   }
-`
-const LabelEdit = () => {
+`;
+
+
+const LabelEdit: React.FC = () => {
+  const {labels, setLabels} = useLabel();
   return (
     <Wrapper>
       <Header>

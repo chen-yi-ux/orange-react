@@ -2,6 +2,7 @@ import {Icon} from 'components/Icon';
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import {useLabel} from 'lib/useLabel';
 
 const Wrapper = styled.section`
   > .title {
@@ -84,18 +85,6 @@ type Label = {
   svg: string,
   category: '-' | '+'
 }
-const defaultLabels: Label[] = [
-  {name: '三餐', svg: '三餐', category: '-'},
-  {name: '衣服', svg: '衣服', category: '-'},
-  {name: '宠物', svg: '宠物', category: '-'},
-  {name: '医疗', svg: '医疗', category: '-'},
-  {name: '零食', svg: '零食', category: '-'},
-  {name: '学习', svg: '学习', category: '-'},
-  {name: '工资', svg: '工资', category: '+'},
-  {name: '利息', svg: '利息', category: '+'},
-  {name: '奖金', svg: '奖金', category: '+'},
-];
-
 type Record = {
   category: '-' | '+',
   amount: number,
@@ -108,7 +97,8 @@ type Props = {
   onChange: (newValue: string, svg: string, category: '-' | '+') => void;
 }
 const LabelSection: React.FC<Props> = (props) => {
-  const labelBlock = defaultLabels.filter(label => label.category === props.value.category);
+  const {labels} = useLabel()
+  const labelBlock = labels.filter(label => label.category === props.value.category);
   const [selectedLabel, setSelectedLabel] = useState('');
   const [label, setLabel] = useState(labelBlock);
   useEffect(() => {
