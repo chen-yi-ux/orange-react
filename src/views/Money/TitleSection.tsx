@@ -1,7 +1,7 @@
 import {Icon} from 'components/Icon';
 import React from 'react';
 import styled from 'styled-components';
-import {useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const Wrapper = styled.section`
   display: flex;
@@ -17,13 +17,11 @@ const Wrapper = styled.section`
   }
 `;
 const TitleSection = () => {
-  const history = useHistory();
-  const onClickBack = () => {
-    history.goBack();
-  };
   return (
     <Wrapper>
-      <Icon name="left" onClick={onClickBack}/>
+      <Link to="/detail">
+        <Icon name="left"/>
+      </Link>
       <span>记一笔</span>
       <Icon name=""/>
     </Wrapper>

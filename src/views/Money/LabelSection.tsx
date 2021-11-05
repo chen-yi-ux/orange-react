@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import {useLabel} from 'lib/useLabel';
+import {Link} from 'react-router-dom';
 
 const Wrapper = styled.section`
   > .title {
@@ -56,6 +57,19 @@ const Wrapper = styled.section`
             width: 45px;
             height: 45px;
           }
+          > a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            > .icon{
+              width: 45px;
+              height: 45px;
+            }
+            > span{
+              color: black;
+            }
+          }
         }
 
         @keyframes shake {
@@ -97,7 +111,7 @@ type Props = {
   onChange: (newValue: string, svg: string, category: '-' | '+') => void;
 }
 const LabelSection: React.FC<Props> = (props) => {
-  const {labels} = useLabel()
+  const {labels} = useLabel();
   const labelBlock = labels.filter(label => label.category === props.value.category);
   const [selectedLabel, setSelectedLabel] = useState('');
   const [label, setLabel] = useState(labelBlock);
@@ -126,8 +140,10 @@ const LabelSection: React.FC<Props> = (props) => {
           )}
           <li>
             <div>
-              <Icon name="设置"/>
-              <span>设置</span>
+              <Link to="/money/edit">
+                <Icon name="设置"/>
+                <span>设置</span>
+              </Link>
             </div>
           </li>
         </ul>
