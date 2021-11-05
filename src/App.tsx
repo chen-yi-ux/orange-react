@@ -4,6 +4,7 @@ import {Detail} from 'views/Detail';
 import {Chart} from 'views/Chart';
 import {Money} from 'views/Money';
 import {NoMatch} from 'views/NoMatch';
+import {LabelEdit} from './views/LabelEdit';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route exact path="/detail">
           <Detail/>
+        </Route>
+        <Route exact path="/money/edit">
+          <LabelEdit/>
         </Route>
         <Redirect exact from="/" to="/detail"/>
         <Route path="*">
