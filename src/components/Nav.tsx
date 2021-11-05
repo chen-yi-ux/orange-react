@@ -21,6 +21,9 @@ const NavWrapper = styled.nav`
         align-items: center;
         flex-direction: column;
         height: 46px;
+        > .icon{
+          fill: currentColor;
+        }
         &.money{
           background: #FF983B;
           color: white;
