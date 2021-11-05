@@ -1,7 +1,8 @@
 import {Icon} from 'components/Icon';
 import styled from 'styled-components';
-import React, {useState} from 'react';
+import React from 'react';
 import {useLabel} from '../lib/useLabel';
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -12,8 +13,8 @@ const Header = styled.div`
   padding-top: 15px;
   padding-left: 10px;
   padding-right: 10px;
-
-  > .icon {
+  
+  > a > .icon {
     width: 24px;
     height: 24px;
   }
@@ -84,15 +85,24 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   background: white;
   font-size: 18px;
   box-shadow: 0 0 3px rgba(0,0,0,0.2);
   height: 75px;
-  > .icon{
-    width: 23px;
-    height: 23px;
+  > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    > .icon{
+      width: 23px;
+      height: 23px;
+    }
+    > span{
+      color: black;
+    }
   }
+  
 `;
 
 
@@ -104,7 +114,9 @@ const LabelEdit: React.FC = () => {
   return (
     <Wrapper>
       <Header>
-        <Icon name="left-white"/>
+        <Link to="/money">
+          <Icon name="left-white"/>
+        </Link>
         <ul>
           <li className="income">收入</li>
           <li className="expenses selected">支出</li>
@@ -124,8 +136,10 @@ const LabelEdit: React.FC = () => {
         </ul>
       </Main>
       <Button>
-        <Icon name="add"/>
-        <span>添加类别</span>
+        <Link to="/money/edit/add">
+          <Icon name="add"/>
+          <span>添加类别</span>
+        </Link>
       </Button>
     </Wrapper>
   );

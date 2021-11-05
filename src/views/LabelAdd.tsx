@@ -2,6 +2,7 @@ import {Icon} from 'components/Icon';
 import styled from 'styled-components';
 import {useState} from 'react';
 import { AllLabels } from 'constant/AllLabels';
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -11,18 +12,24 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
   height: 60px;
   padding: 0 10px;
   padding-top: 10px;
   color: white;
   font-size: 22px;
 
-  > .icon {
-    width: 30px;
-    height: 30px;
-    padding-right: 15px;
+  > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > .icon {
+      width: 30px;
+      height: 30px;
+      padding-right: 15px;
+    }
   }
-
+  
   > .finish {
     font-size: 16px;
     width: 12%;
@@ -128,7 +135,9 @@ const LabelAdd = () => {
   return (
     <Wrapper>
       <Header>
-        <Icon name="left-white"/>
+        <Link to={"/money/edit"}>
+          <Icon name="left-white"/>
+        </Link>
         <span className="name">添加支出类别</span>
         <span className="finish">完成</span>
       </Header>
