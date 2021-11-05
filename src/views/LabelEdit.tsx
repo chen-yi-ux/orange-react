@@ -1,6 +1,6 @@
 import {Icon} from 'components/Icon';
 import styled from 'styled-components';
-import React from 'react';
+import React, {useState} from 'react';
 import {useLabel} from '../lib/useLabel';
 
 const Wrapper = styled.div`
@@ -97,7 +97,10 @@ const Button = styled.div`
 
 
 const LabelEdit: React.FC = () => {
-  const {labels, setLabels} = useLabel();
+  const {labels, setLabels, onClickDelete} = useLabel();
+  // const categoryList = useState<('-'|'+')[]>(['+', '-']);
+  // const categoryMap = {'-': '支出', '+': '收入'};
+
   return (
     <Wrapper>
       <Header>
@@ -109,90 +112,15 @@ const LabelEdit: React.FC = () => {
       </Header>
       <Main>
         <ul>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
-          <li>
-            <div className="content">
-              <Icon name="三餐"/>
-              <span>三餐</span>
-            </div>
-            <Icon name="delete"/>
-          </li>
+          {labels.map(item =>
+            <li key={item.name}>
+              <div className="content">
+                <Icon name={item.svg}/>
+                <span>{item.name}</span>
+              </div>
+              <Icon name="delete" onClick={onClickDelete}/>
+            </li>
+          )}
         </ul>
       </Main>
       <Button>

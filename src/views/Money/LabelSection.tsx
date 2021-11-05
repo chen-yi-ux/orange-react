@@ -119,7 +119,7 @@ const LabelSection: React.FC<Props> = (props) => {
                      setSelectedLabel(item.name);
                      props.onChange(item.name, item.svg, item.category);
                    }}>
-                <Icon name={item.name}/>
+                <Icon name={item.svg}/>
                 <span>{item.name}</span>
               </div>
             </li>

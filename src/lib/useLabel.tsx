@@ -19,7 +19,10 @@ export const defaultLabels: Label[] = [
 
 const useLabel = () => {
   const [labels, setLabels] = useState(defaultLabels);
-  return {labels, setLabels};
+  const onClickDelete = () => {
+
+  }
+  return {labels, setLabels, onClickDelete};
 };
 
 export {useLabel};
