@@ -107,7 +107,7 @@ const Button = styled.div`
 
 
 const LabelEdit: React.FC = () => {
-  const {labels, setLabels, onClickDelete} = useLabel();
+  const {labels, setLabels, deleteLabel} = useLabel();
   // const categoryList = useState<('-'|'+')[]>(['+', '-']);
   // const categoryMap = {'-': '支出', '+': '收入'};
 
@@ -130,7 +130,7 @@ const LabelEdit: React.FC = () => {
                 <Icon name={item.svg}/>
                 <span>{item.name}</span>
               </div>
-              <Icon name="delete" onClick={onClickDelete}/>
+              <Icon name="delete" onClick={() => deleteLabel(item)}/>
             </li>
           )}
         </ul>

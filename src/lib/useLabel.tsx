@@ -19,10 +19,11 @@ export const defaultLabels: Label[] = [
 
 const useLabel = () => {
   const [labels, setLabels] = useState(defaultLabels);
-  const onClickDelete = () => {
-
-  }
-  return {labels, setLabels, onClickDelete};
+  const deleteLabel = (label: Label) => {
+    setLabels(labels.filter(item => item.name !== label.name));
+    window.alert('已删除');
+  };
+  return {labels, setLabels, deleteLabel};
 };
 
 export {useLabel};
