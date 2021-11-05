@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useUpdate} from './useUpdate';
 
 type Label = {
   name: string,
@@ -19,6 +20,16 @@ export const defaultLabels: Label[] = [
 
 const useLabel = () => {
   const [labels, setLabels] = useState(defaultLabels);
+  useEffect(() => {
+    let localLabels = JSON.parse(window.localStorage.getItem('labels') || '[]');
+    if (localLabels.length === 0) {
+      localLabels = defaultLabels;
+    }
+    setLabels(localLabels);
+  }, []);
+  useUpdate(() => {
+    window.localStorage.setItem('labels', JSON.stringify(labels));
+  }, [labels]);
   const deleteLabel = (label: Label) => {
     setLabels(labels.filter(item => item.name !== label.name));
     window.alert('已删除');

@@ -1,7 +1,7 @@
 import {Icon} from 'components/Icon';
 import styled from 'styled-components';
 import React from 'react';
-import {useLabel} from '../lib/useLabel';
+import {useLabel} from 'hooks/useLabel';
 import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`

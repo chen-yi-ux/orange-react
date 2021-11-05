@@ -2,7 +2,7 @@ import {Icon} from 'components/Icon';
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import {useLabel} from 'lib/useLabel';
+import {useLabel} from 'hooks/useLabel';
 import {Link} from 'react-router-dom';
 
 const Wrapper = styled.section`
