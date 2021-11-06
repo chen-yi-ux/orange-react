@@ -6,8 +6,8 @@ import {AmountSection} from './Money/AmountSection';
 import {TimeSection} from './Money/TimeSection';
 import {NoteSection} from './Money/NoteSection';
 import {LabelSection} from './Money/LabelSection';
-import {Button} from './Money/Button';
 import dayjs from 'dayjs';
+import {useRecords} from '../hooks/useRecords';
 // import dayjs from 'dayjs';
 
 
@@ -18,6 +18,24 @@ const Main = styled.section`
   height: calc(100% - 110px);
   padding: 0 14px;
 `;
+const Button = styled.div`
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+
+  > button {
+    width: 40%;
+    height: 80%;
+    background: #FF983B;
+    color: white;
+    font-size: 24px;
+    border-radius: 35px;
+    border: none;
+
+  }
+`;
 
 type Label = {
   name: string,
@@ -26,19 +44,30 @@ type Label = {
 }
 type Category = '-' | '+'
 
+const defaultRecord = {
+  category: '-' as Category,
+  amount: 0,
+  time: dayjs(),
+  note: '',
+  label: {name: '', svg: '', category: '-'} as Label
+}
 function Money() {
-  const [record, setRecord] = useState({
-    category: '-' as Category,
-    amount: 0,
-    time: dayjs(),
-    note: '',
-    label: {name: '', svg: '', category: '-'} as Label
-  });
+  const [record, setRecord] = useState(defaultRecord);
   const onChange = (obj: Partial<typeof record>) => {
     setRecord({
       ...record,
       ...obj
     });
+  };
+  const {records, addRecords} = useRecords();
+  const Save = () => {
+    if(record.label.svg === ''){
+      window.alert('选一下分类啦');
+    }else {
+      addRecords(record);
+      window.alert('保存成功');
+      setRecord(defaultRecord);
+    }
   };
   return (
     <div className="mmm">
@@ -55,9 +84,11 @@ function Money() {
         <NoteSection value={record.note}
                      onChange={(note) => onChange({note})}/>
         <LabelSection value={record}
-                      onChange={(label, svg,category) =>
+                      onChange={(label, svg, category) =>
                         onChange({label: {name: label, svg: svg, category: category}})}/>
-        <Button/>
+        <Button>
+          <button onClick={Save}>保存</button>
+        </Button>
       </Main>
     </div>
   );

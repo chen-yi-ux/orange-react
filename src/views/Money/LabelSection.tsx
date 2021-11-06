@@ -117,7 +117,7 @@ const LabelSection: React.FC<Props> = (props) => {
   const [label, setLabel] = useState(labelBlock);
   useEffect(() => {
     setLabel(labelBlock);
-  }, [props.value.category]);
+  }, [props.value.category, labelBlock]);
   return (
     <Wrapper>
       <div className="title">

@@ -107,7 +107,7 @@ const Button = styled.div`
 
 
 const LabelEdit: React.FC = () => {
-  const {labels, setLabels, deleteLabel} = useLabel();
+  const {labels, deleteLabel} = useLabel();
   // const categoryList = useState<('-'|'+')[]>(['+', '-']);
   // const categoryMap = {'-': '支出', '+': '收入'};
 

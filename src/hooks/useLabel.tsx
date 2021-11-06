@@ -19,14 +19,14 @@ export const defaultLabels: Label[] = [
 ];
 
 const useLabel = () => {
-  const [labels, setLabels] = useState(defaultLabels);
+  const [labels, setLabels] = useState<Label[]>([]);
   useEffect(() => {
     let localLabels = JSON.parse(window.localStorage.getItem('labels') || '[]');
     if (localLabels.length === 0) {
       localLabels = defaultLabels;
     }
     setLabels(localLabels);
-  }, []);
+  }, [])
   useUpdate(() => {
     window.localStorage.setItem('labels', JSON.stringify(labels));
   }, [labels]);
