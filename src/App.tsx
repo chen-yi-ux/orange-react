@@ -23,7 +23,7 @@ function App() {
         <Route exact path="/money/edit">
           <LabelEdit/>
         </Route>
-        <Route exact path="/money/edit/add">
+        <Route exact path="/money/edit/add/:type">
           <LabelAdd/>
         </Route>
         <Redirect exact from="/" to="/detail"/>

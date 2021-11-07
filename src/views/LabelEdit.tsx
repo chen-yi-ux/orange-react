@@ -149,7 +149,7 @@ const LabelEdit: React.FC = () => {
         </ul>
       </Main>
       <Button>
-        <Link to="/money/edit/add">
+        <Link to={`/money/edit/add/${category}`}>
           <Icon name="add"/>
           <span>添加类别</span>
         </Link>

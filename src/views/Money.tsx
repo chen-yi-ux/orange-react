@@ -59,7 +59,7 @@ function Money() {
       ...obj
     });
   };
-  const {records, addRecords} = useRecords();
+  const {addRecords} = useRecords();
   const Save = () => {
     if(record.label.svg === ''){
       window.alert('选一下分类啦');

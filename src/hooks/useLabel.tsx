@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useUpdate} from './useUpdate';
+import {useHistory} from 'react-router-dom';
 
 type Label = {
   name: string,
@@ -20,6 +21,7 @@ export const defaultLabels: Label[] = [
 
 const useLabel = () => {
   const [labels, setLabels] = useState<Label[]>([]);
+  const history = useHistory();
   useEffect(() => {
     let localLabels = JSON.parse(window.localStorage.getItem('labels') || '[]');
     if (localLabels.length === 0) {
@@ -34,7 +36,15 @@ const useLabel = () => {
     setLabels(labels.filter(item => item.name !== label.name));
     window.alert('已删除');
   };
-  return {labels, setLabels, deleteLabel};
+  const addLabel = (newLabel: Label) => {
+    if(newLabel.name === '' || newLabel.svg === ''){
+      window.alert('类别名称和图标都要选哦');
+    } else {
+      setLabels([...labels, newLabel]);
+      history.goBack();
+    }
+  }
+  return {labels, setLabels, deleteLabel, addLabel};
 };
 
 export {useLabel};

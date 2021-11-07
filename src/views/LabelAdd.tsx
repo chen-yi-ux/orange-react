@@ -1,8 +1,10 @@
 import {Icon} from 'components/Icon';
 import styled from 'styled-components';
-import {useState} from 'react';
-import { AllLabels } from 'constant/AllLabels';
-import { Link } from 'react-router-dom';
+import {useRef, useState} from 'react';
+import {AllLabels} from 'constant/AllLabels';
+import {Link, useParams} from 'react-router-dom';
+import {useLabel} from 'hooks/useLabel';
+import classnames from 'classnames';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -23,19 +25,21 @@ const Header = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
     > .icon {
       width: 30px;
       height: 30px;
       padding-right: 15px;
     }
   }
-  
+
   > .finish {
-    font-size: 16px;
     width: 12%;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 16px;
+    color: white;
   }
 `;
 const Main = styled.div`
@@ -129,30 +133,62 @@ const Content = styled.div`
     }
   }
 `;
-
+type Label = {
+  name: string,
+  svg: string,
+  category: '-' | '+'
+}
+type Params = {
+  type: '-' | '+'
+}
 const LabelAdd = () => {
+  const refInput = useRef<HTMLInputElement>(null);
   const [allLabels] = useState(AllLabels);
+  const {addLabel} = useLabel();
+  const [select, setSelect] = useState('');
+  const [newLabel, setNewLabel] = useState<Label>({name: '', svg: '', category: '-'});
+  let {type} = useParams<Params>();
+  const categoryMap = {'-': '支出', '+': '收入'};
+  const onBlur = () => {
+    if (refInput.current !== null) {
+      setNewLabel({...newLabel, name: refInput.current.value, category: type});
+    }
+  };
+  const onAddLabel = () => {
+    addLabel(newLabel);
+  };
+  console.log('newLabel:');
+  console.log(newLabel);
   return (
     <Wrapper>
       <Header>
-        <Link to={"/money/edit"}>
+        <Link to={'/money/edit'}>
           <Icon name="left-white"/>
         </Link>
-        <span className="name">添加支出类别</span>
-        <span className="finish">完成</span>
+        <span className="name">添加{categoryMap[type]}类别</span>
+        <span className="finish"
+              onClick={onAddLabel}
+        >完成</span>
       </Header>
       <Main>
         <Title>
           <span>类别名称</span>
-          <input type="text" placeholder="<输入名称>"/>
+          <input type="text" placeholder="<输入名称>"
+                 ref={refInput}
+                 onBlur={onBlur}
+          />
         </Title>
         <Content>
           <div className="iconName">图标</div>
           <div className="icons">
             <ul>
               {allLabels.map(item =>
-                <li>
-                  <div className="icon-wrapper">
+                <li key={item}>
+                  <div className={classnames('icon-wrapper', select === item ? 'selected' : '')}
+                       onClick={() => {
+                         setSelect(item);
+                         setNewLabel({...newLabel, svg: item});
+                       }}>
                     <Icon name={item}/>
                   </div>
                 </li>
