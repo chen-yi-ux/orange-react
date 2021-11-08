@@ -8,7 +8,7 @@ type Label = {
   category: '-' | '+'
 }
 type Category = '-' | '+';
-type RecordItem = {
+export type RecordItem = {
   category: Category,
   amount: number,
   time: Dayjs,

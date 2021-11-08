@@ -1,10 +1,12 @@
 import {Layout} from 'components/Layout';
-import React from 'react';
+import React, {useState} from 'react';
 import {Icon} from 'components/Icon';
 import styled from 'styled-components';
 import {DatePicker} from 'components';
 import dayjs from 'dayjs';
 import locale from 'antd/es/date-picker/locale/zh_CN';
+import {RecordItem, useRecords} from 'hooks/useRecords';
+import {CategoryAmount} from 'components/CategoryAmount';
 
 const Header = styled.div`
   background: #FF983B;
@@ -91,7 +93,7 @@ const Main = styled.div`
   height: calc(100% - 120px);
   overflow: auto;
 
-  > ol > li {
+  > .main-wrapper {
     border-bottom: 1px solid #e3e3e3;
 
     > .item1 {
@@ -103,35 +105,81 @@ const Main = styled.div`
       color: #B0ACAC;
       font-size: 14px;
     }
-    > ol {
-      > li {
+
+    > .item2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 10px;
+      font-size: 18px;
+      color: black;
+
+      > .name {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        padding: 5px 10px;
-        font-size: 18px;
-        color: black;
-        > .name {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          > .icon {
-            width: 30px;
-            height: 30px;
-          }
-          > span {
-            padding-left: 10px;
-          }
+
+        > .icon {
+          width: 30px;
+          height: 30px;
         }
-        > .amount {
-          color: #306ECC;
+
+        > span {
+          padding-left: 10px;
         }
+      }
+
+      > .amount {
+        color: #306ECC;
       }
     }
   }
 `;
 
 function Detail() {
+  const [month, setMonth] = useState(dayjs());
+  const {records} = useRecords();
+  const classRecords = records.filter(item => dayjs(item.time).month() === month.month());
+  const hash: { [key: string]: RecordItem[] } = {};
+  classRecords.forEach(r => {
+    const key = dayjs(r.time).format('YYYY年MM月DD日');
+    if (!(key in hash)) {
+      hash[key] = [];
+    }
+    hash[key].push(r);
+  });
+  const orderHash = Object.entries(hash).sort((a, b) => {
+    if (a[0] === b[0]) {
+      return 0;
+    } else if (a[0] > b[0]) {
+      return -1;
+    } else if (a[0] < b[0]) {
+      return 1;
+    }
+    return 0;
+  });
+  const itemAmount = (item: RecordItem) => {
+    if (item.category === '-') {
+      return ('-' + item.amount);
+    } else {
+      return ('+' + item.amount);
+    }
+  };
+  const groupAmount = (record: RecordItem[]) => {
+    let num = 0;
+    record.forEach(r => {
+      if (r.category === '-') {
+        num = num - r.amount;
+      } else if (r.category === '+') {
+        num = num + r.amount;
+      }
+    });
+    if (num < 0) {
+      return num;
+    } else {
+      return ('+' + num);
+    }
+  };
   return (
     <Layout>
       <Header>
@@ -141,67 +189,45 @@ function Detail() {
         </div>
         <div className="main-wrapper">
           <div className="time">
-            <DatePicker picker="month" locale={locale} value={dayjs()}/>
+            <DatePicker picker="month" locale={locale} value={month}
+                        onChange={(e) => {
+                          if (e !== null) {
+                            setMonth(e);
+                          }
+                        }}/>
           </div>
           <div className="money">
             <div className="income">
               <span className="income-content">收入</span>
-              <span className="income-amount">1000</span>
+              <span className="income-amount">{CategoryAmount(classRecords, '+')}</span>
             </div>
             <div className="expenses">
               <span className="expenses-content">支出</span>
-              <span className="expenses-amount">110</span>
+              <span className="expenses-amount">{CategoryAmount(classRecords, '-')}</span>
             </div>
           </div>
         </div>
       </Header>
       <Main>
-        <ol>
-          <li>
+        {orderHash.map(([date, record]) =>
+          <div className="main-wrapper" key={date}>
             <div className="item1">
-              <span>今天</span>
-              <span>100</span>
+              <span>{date}</span>
+              <span>{groupAmount(record)}</span>
             </div>
-            <ol>
-              <li>
+            {record.map(r =>
+              <div className="item2">
                 <div className="name">
-                  <Icon name="三餐"/>
-                  <span>三餐</span>
+                  <Icon name={r.label.svg}/>
+                  <span>{r.label.name}</span>
                 </div>
-                <div className="amount">-100</div>
-              </li>
-              <li>
-                <div className="name">
-                  <Icon name="三餐"/>
-                  <span>三餐</span>
+                <div className="amount">
+                  {itemAmount(r)}
                 </div>
-                <div className="amount">-100</div>
-              </li>
-            </ol>
-          </li>
-          <li>
-            <div className="item1">
-              <span>昨天</span>
-              <span>100</span>
-            </div>
-            <ol>
-              <li>
-                <div className="name">
-                  <Icon name="三餐"/>
-                  <span>三餐</span>
-                </div>
-                <div className="amount">-100</div>
-              </li>
-              <li>
-                <div className="name">
-                  <Icon name="三餐"/>
-                  <span>三餐</span>
-                </div>
-                <div className="amount">-100</div>
-              </li>
-            </ol>
-          </li>
-        </ol>
+              </div>
+            )}
+          </div>
+        )}
       </Main>
     </Layout>
   );
