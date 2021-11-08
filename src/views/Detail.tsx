@@ -216,7 +216,7 @@ function Detail() {
               <span>{groupAmount(record)}</span>
             </div>
             {record.map(r =>
-              <div className="item2">
+              <div className="item2" key={r.id}>
                 <div className="name">
                   <Icon name={r.label.svg}/>
                   <span>{r.label.name}</span>

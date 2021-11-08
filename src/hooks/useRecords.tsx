@@ -9,6 +9,7 @@ type Label = {
 }
 type Category = '-' | '+';
 export type RecordItem = {
+  id?: number,
   category: Category,
   amount: number,
   time: Dayjs,

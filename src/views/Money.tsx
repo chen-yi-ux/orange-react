@@ -8,6 +8,7 @@ import {NoteSection} from './Money/NoteSection';
 import {LabelSection} from './Money/LabelSection';
 import dayjs from 'dayjs';
 import {useRecords} from '../hooks/useRecords';
+import {createId} from '../lib/createId';
 // import dayjs from 'dayjs';
 
 
@@ -45,6 +46,7 @@ type Label = {
 type Category = '-' | '+'
 
 const defaultRecord = {
+  id: 0,
   category: '-' as Category,
   amount: 0,
   time: dayjs(),
@@ -64,6 +66,7 @@ function Money() {
     if(record.label.svg === ''){
       window.alert('选一下分类啦');
     }else {
+      record.id = createId();
       addRecords(record);
       window.alert('保存成功');
       setRecord(defaultRecord);
