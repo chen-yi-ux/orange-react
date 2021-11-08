@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import {RecordItem, useRecords} from 'hooks/useRecords';
 import {CategoryAmount} from 'components/CategoryAmount';
+import {Link} from 'react-router-dom';
 
 const Header = styled.div`
   background: #FF983B;
@@ -216,7 +217,7 @@ function Detail() {
               <span>{groupAmount(record)}</span>
             </div>
             {record.map(r =>
-              <div className="item2" key={r.id}>
+              <Link className="item2" key={r.id} to={`/detail/edit/${r.id}`}>
                 <div className="name">
                   <Icon name={r.label.svg}/>
                   <span>{r.label.name}</span>
@@ -224,7 +225,7 @@ function Detail() {
                 <div className="amount">
                   {itemAmount(r)}
                 </div>
-              </div>
+              </Link>
             )}
           </div>
         )}

@@ -6,6 +6,7 @@ import {Money} from 'views/Money';
 import {NoMatch} from 'views/NoMatch';
 import {LabelEdit} from 'views/LabelEdit';
 import {LabelAdd} from 'views/LabelAdd';
+import {RecordEdit} from 'views/RecordEdit';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         </Route>
         <Route exact path="/detail">
           <Detail/>
+        </Route>
+        <Route exact path="/detail/edit/:type">
+          <RecordEdit/>
         </Route>
         <Route exact path="/money/edit">
           <LabelEdit/>
