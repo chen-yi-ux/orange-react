@@ -5,6 +5,10 @@ import {Icon} from './Icon';
 
 const NavWrapper = styled.nav`
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
   > ul {
     display: flex;
     justify-content: center;

@@ -22,7 +22,10 @@ const Header = styled.div`
   font-size: 22px;
   color: white;
   background: #FF983B;
-
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
   > a {
     padding-left: 10px;
     width: 32px;
@@ -61,6 +64,9 @@ const Header = styled.div`
 `;
 const Main = styled.div`
   height: calc(100% - 70px);
+  position: fixed;
+  left: 0;
+  top: 70px;
   width: 100%;
 
   > .time-select {

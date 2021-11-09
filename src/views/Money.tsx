@@ -14,10 +14,18 @@ import {createId} from '../lib/createId';
 
 const Header = styled.section`
   height: 110px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
 `;
 const Main = styled.section`
   height: calc(100% - 110px);
   padding: 0 14px;
+  position: fixed;
+  left: 0;
+  top: 110px;
+  width: 100%;
 `;
 const Button = styled.div`
   height: 65px;
@@ -25,7 +33,10 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
   > button {
     width: 40%;
     height: 80%;
