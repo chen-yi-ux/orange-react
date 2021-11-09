@@ -5,8 +5,10 @@ import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/pie';
 import ReactEcharts from 'echarts-for-react';
 import {Link} from 'react-router-dom';
-import {useRecords} from '../hooks/useRecords';
+import {useRecords} from 'hooks/useRecords';
 import {useMonth} from '../hooks/useMonth';
+import dayjs from 'dayjs';
+import { getOption } from 'lib/getOption';
 
 const All = styled.div`
   height: 100vh;
@@ -123,7 +125,7 @@ const Main = styled.div`
           width: 30px;
           height: 30px;
         }
-        
+
         > .item-name {
           padding-left: 5px;
           color: black;
@@ -143,19 +145,27 @@ const Main = styled.div`
 `;
 
 type EChartsOption = echarts.EChartOption;
+
 function Chart() {
-  const [type, setType] = useState<('-'|'+')>('-');
+  const [type, setType] = useState<('-' | '+')>('-');
   const categoryMap = {'-': '支出', '+': '收入'};
   const changeCategory = () => {
     console.log('hhh');
-    if(type === '-'){
+    if (type === '-') {
       setType('+');
     } else {
       setType('-');
     }
+  };
+  const {month, getMonth, Before, After} = useMonth();
+  const {records} = useRecords();
+  const recordSelect = records.filter(record => dayjs(record.time).month() === month.month() && record.category === type);
+  const chartRecord = getOption(recordSelect);
+  const Total = () => {
+    let total = 0;
+    chartRecord.forEach(r => total += r.value);
+    return total;
   }
-  const {getMonth, Before, After} = useMonth();
-
   const option: EChartsOption = {
     tooltip: {
       trigger: 'item',
@@ -173,13 +183,7 @@ function Chart() {
           borderColor: '#fff',
           borderWidth: 1
         },
-        data:  [
-          { value: 1048, name: 'Search Engine' },
-          { value: 735, name: 'Direct' },
-          { value: 580, name: 'Email' },
-          { value: 484, name: 'Union Ads' },
-          { value: 300, name: 'Video Ads' }
-        ],
+        data: chartRecord,
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
@@ -189,7 +193,7 @@ function Chart() {
         }
       }
     ]
-  }
+  };
   return (
     <All>
       <Header>
@@ -212,20 +216,22 @@ function Chart() {
         </div>
         <ReactEcharts option={option} style={{height: '250px'}}/>
         <div className="total">
-          <span>总支出</span>
-          <span className="number">200元</span>
+          <span>总{categoryMap[type]}</span>
+          <span className="number">{Total()}元</span>
         </div>
         <hr/>
         <div className="records">
           <ol>
-            <li>
-              <div className="item">
-                <Icon name="三餐"/>
-                <span className="item-name">三餐</span>
-                <span className="item-per">95%</span>
-              </div>
-              <span>198</span>
-            </li>
+            {chartRecord.map(r =>
+              <li key={r.name}>
+                <div className="item">
+                  <Icon name={r.svg}/>
+                  <span className="item-name">{r.name}</span>
+                  <span className="item-per">{r.per}%</span>
+                </div>
+                <span>{r.value}</span>
+              </li>
+            )}
           </ol>
         </div>
       </Main>
