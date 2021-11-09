@@ -28,7 +28,7 @@ const useLabel = () => {
       localLabels = defaultLabels;
     }
     setLabels(localLabels);
-  }, [])
+  }, []);
   useUpdate(() => {
     window.localStorage.setItem('labels', JSON.stringify(labels));
   }, [labels]);
@@ -37,13 +37,16 @@ const useLabel = () => {
     window.alert('已删除');
   };
   const addLabel = (newLabel: Label) => {
-    if(newLabel.name === '' || newLabel.svg === ''){
+    const nameList = labels.map(item => item.name);
+    if (newLabel.name === '' || newLabel.svg === '') {
       window.alert('类别名称和图标都要选哦');
+    } else if (nameList.indexOf(newLabel.name) > 0) {
+      window.alert('该类别已存在哦');
     } else {
       setLabels([...labels, newLabel]);
       history.goBack();
     }
-  }
+  };
   return {labels, setLabels, deleteLabel, addLabel};
 };
 
