@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Icon} from 'components/Icon';
 import styled from 'styled-components';
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/pie';
 import ReactEcharts from 'echarts-for-react';
-
+import {Link} from 'react-router-dom';
+import {useRecords} from '../hooks/useRecords';
+import {useMonth} from '../hooks/useMonth';
 
 const All = styled.div`
   height: 100vh;
@@ -18,7 +20,7 @@ const Header = styled.div`
   color: white;
   background: #FF983B;
 
-  > .left {
+  > a {
     padding-left: 10px;
     width: 32px;
     height: 32px;
@@ -142,6 +144,18 @@ const Main = styled.div`
 
 type EChartsOption = echarts.EChartOption;
 function Chart() {
+  const [type, setType] = useState<('-'|'+')>('-');
+  const categoryMap = {'-': '支出', '+': '收入'};
+  const changeCategory = () => {
+    console.log('hhh');
+    if(type === '-'){
+      setType('+');
+    } else {
+      setType('-');
+    }
+  }
+  const {getMonth, Before, After} = useMonth();
+
   const option: EChartsOption = {
     tooltip: {
       trigger: 'item',
@@ -179,12 +193,12 @@ function Chart() {
   return (
     <All>
       <Header>
-        <div className="left">
+        <Link to="/detail">
           <Icon name="left-white"/>
-        </div>
+        </Link>
         <div className="type">
-          <span>支出</span>
-          <div className="down">
+          <span>{categoryMap[type]}</span>
+          <div className="down" onClick={changeCategory}>
             <Icon name="down"/>
           </div>
         </div>
@@ -192,9 +206,9 @@ function Chart() {
       </Header>
       <Main>
         <div className="time-select">
-          <Icon name="Arrow-left"/>
-          <span>11月</span>
-          <Icon name="Arrow-right"/>
+          <Icon name="Arrow-left" onClick={Before}/>
+          <span>{getMonth()}</span>
+          <Icon name="Arrow-right" onClick={After}/>
         </div>
         <ReactEcharts option={option} style={{height: '250px'}}/>
         <div className="total">
