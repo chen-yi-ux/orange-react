@@ -9,6 +9,7 @@ import {useRecords} from 'hooks/useRecords';
 import {useMonth} from '../hooks/useMonth';
 import dayjs from 'dayjs';
 import { getOption } from 'lib/getOption';
+import {Blank} from '../components/Blank';
 
 const All = styled.div`
   height: 100vh;
@@ -84,7 +85,19 @@ const Main = styled.div`
       height: 30px;
     }
   }
-
+  
+  > .circle{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: 250px;
+    > .icon{
+      width: 200px;
+      height: 200px;
+    }
+  }
+  
   > .total {
     width: 100%;
     display: flex;
@@ -142,6 +155,10 @@ const Main = styled.div`
       }
     }
   }
+  
+  > .blank{
+    margin-top: 5vh;
+  }
 `;
 
 type EChartsOption = echarts.EChartOption;
@@ -194,6 +211,24 @@ function Chart() {
       }
     ]
   };
+  const Content = (chartRecord: {name: string, value: number, svg: string, per: number}[]) => {
+    return (
+      <div className="records">
+        <ol>
+          {chartRecord.map(r =>
+            <li key={r.name}>
+              <div className="item">
+                <Icon name={r.svg}/>
+                <span className="item-name">{r.name}</span>
+                <span className="item-per">{r.per}%</span>
+              </div>
+              <span>{r.value}</span>
+            </li>
+          )}
+        </ol>
+      </div>
+    )
+  }
   return (
     <All>
       <Header>
@@ -214,26 +249,13 @@ function Chart() {
           <span>{getMonth()}</span>
           <Icon name="Arrow-right" onClick={After}/>
         </div>
-        <ReactEcharts option={option} style={{height: '250px'}}/>
+        {chartRecord !== [] ? <ReactEcharts option={option} style={{height: '250px'}}/> : <div className="circle"><Icon name="circle"/></div> }
         <div className="total">
           <span>总{categoryMap[type]}</span>
           <span className="number">{Total()}元</span>
         </div>
         <hr/>
-        <div className="records">
-          <ol>
-            {chartRecord.map(r =>
-              <li key={r.name}>
-                <div className="item">
-                  <Icon name={r.svg}/>
-                  <span className="item-name">{r.name}</span>
-                  <span className="item-per">{r.per}%</span>
-                </div>
-                <span>{r.value}</span>
-              </li>
-            )}
-          </ol>
-        </div>
+        {chartRecord !== [] ? Content(chartRecord) : <div className="blank"><Blank/></div>}
       </Main>
     </All>
   );

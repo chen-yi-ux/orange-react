@@ -8,6 +8,7 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import {RecordItem, useRecords} from 'hooks/useRecords';
 import {CategoryAmount} from 'components/CategoryAmount';
 import {Link} from 'react-router-dom';
+import { Blank } from 'components/Blank';
 
 const Header = styled.div`
   background: #FF983B;
@@ -93,47 +94,52 @@ const Header = styled.div`
 const Main = styled.div`
   height: calc(100% - 120px);
   overflow: auto;
+  > .group{
+    > .main-wrapper {
+      border-bottom: 1px solid #e3e3e3;
 
-  > .main-wrapper {
-    border-bottom: 1px solid #e3e3e3;
-
-    > .item1 {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #F9F9F9;
-      padding: 4px 10px;
-      color: #B0ACAC;
-      font-size: 14px;
-    }
-
-    > a > .item2 {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px 10px;
-      font-size: 18px;
-      color: black;
-
-      > .name {
+      > .item1 {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-
-        > .icon {
-          width: 30px;
-          height: 30px;
-        }
-
-        > span {
-          padding-left: 10px;
-        }
+        border-bottom: 1px solid #F9F9F9;
+        padding: 4px 10px;
+        color: #B0ACAC;
+        font-size: 14px;
       }
 
-      > .amount {
-        color: #306ECC;
+      > a > .item2 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 10px;
+        font-size: 18px;
+        color: black;
+
+        > .name {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          > .icon {
+            width: 30px;
+            height: 30px;
+          }
+
+          > span {
+            padding-left: 10px;
+          }
+        }
+
+        > .amount {
+          color: #306ECC;
+        }
       }
     }
+  }
+  
+  > .blank{
+  margin-top: 22vh;
   }
 `;
 
@@ -181,6 +187,33 @@ function Detail() {
       return ('+' + num);
     }
   };
+  const Content = () => {
+    return (
+      <div className="group">
+        {orderHash.map(([date, record]) =>
+          <div className="main-wrapper" key={date}>
+            <div className="item1">
+              <span>{date}</span>
+              <span>{groupAmount(record)}</span>
+            </div>
+            {record.map(r =>
+              <Link to={`/detail/edit/${r.id}`} key={r.id}>
+                <div className="item2">
+                  <div className="name">
+                    <Icon name={r.label.svg}/>
+                    <span>{r.label.name}</span>
+                  </div>
+                  <div className="amount">
+                    {itemAmount(r)}
+                  </div>
+                </div>
+              </Link>
+            )}
+          </div>
+        )}
+      </div>
+    )
+  }
   return (
     <Layout>
       <Header>
@@ -210,27 +243,7 @@ function Detail() {
         </div>
       </Header>
       <Main>
-        {orderHash.map(([date, record]) =>
-          <div className="main-wrapper" key={date}>
-            <div className="item1">
-              <span>{date}</span>
-              <span>{groupAmount(record)}</span>
-            </div>
-            {record.map(r =>
-              <Link to={`/detail/edit/${r.id}`} key={r.id}>
-                <div className="item2">
-                  <div className="name">
-                    <Icon name={r.label.svg}/>
-                    <span>{r.label.name}</span>
-                  </div>
-                  <div className="amount">
-                    {itemAmount(r)}
-                  </div>
-                </div>
-              </Link>
-            )}
-          </div>
-        )}
+        {orderHash !== [] ? Content() : <div className="blank"><Blank/></div>}
       </Main>
     </Layout>
   );
