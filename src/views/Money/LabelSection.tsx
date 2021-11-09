@@ -1,5 +1,5 @@
 import {Icon} from 'components/Icon';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import {useLabel} from 'hooks/useLabel';
@@ -114,10 +114,6 @@ const LabelSection: React.FC<Props> = (props) => {
   const {labels} = useLabel();
   const labelBlock = labels.filter(label => label.category === props.value.category);
   const [selectedLabel, setSelectedLabel] = useState('');
-  const [label, setLabel] = useState(labelBlock);
-  useEffect(() => {
-    setLabel(labelBlock);
-  }, [props.value.category]);
   return (
     <Wrapper>
       <div className="title">
@@ -126,7 +122,7 @@ const LabelSection: React.FC<Props> = (props) => {
       </div>
       <div className="content">
         <ul>
-          {label.map(item =>
+          {labelBlock.map(item =>
             <li key={item.name}>
               <div className={selectedLabel === item.name ? 'selected' : ''}
                    onClick={() => {
