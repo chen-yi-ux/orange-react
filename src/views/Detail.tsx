@@ -243,7 +243,7 @@ function Detail() {
         </div>
       </Header>
       <Main>
-        {orderHash !== [] ? Content() : <div className="blank"><Blank/></div>}
+        {orderHash.length !== 0 ? Content() : <div className="blank"><Blank/></div>}
       </Main>
     </Layout>
   );

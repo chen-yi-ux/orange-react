@@ -173,7 +173,6 @@ function Chart() {
   const [type, setType] = useState<('-' | '+')>('-');
   const categoryMap = {'-': '支出', '+': '收入'};
   const changeCategory = () => {
-    console.log('hhh');
     if (type === '-') {
       setType('+');
     } else {
@@ -217,7 +216,7 @@ function Chart() {
       }
     ]
   };
-  const Content = (chartRecord: {name: string, value: number, svg: string, per: number}[]) => {
+  const Content = () => {
     return (
       <div className="records">
         <ol>
@@ -255,13 +254,13 @@ function Chart() {
           <span>{getMonth()}</span>
           <Icon name="Arrow-right" onClick={After}/>
         </div>
-        {chartRecord !== [] ? <ReactEcharts option={option} style={{height: '250px'}}/> : <div className="circle"><Icon name="circle"/></div> }
+        {chartRecord.length !== 0 ? <ReactEcharts option={option} style={{height: '250px'}}/> : <div className="circle"><Icon name="circle"/></div> }
         <div className="total">
           <span>总{categoryMap[type]}</span>
           <span className="number">{Total()}元</span>
         </div>
         <hr/>
-        {chartRecord !== [] ? Content(chartRecord) : <div className="blank"><Blank/></div>}
+        {chartRecord.length !== 0 ? Content() : <div className="blank"><Blank/></div>}
       </Main>
     </All>
   );
