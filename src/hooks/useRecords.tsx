@@ -16,7 +16,7 @@ export type RecordItem = {
   note: string,
   label: Label
 }
-export const useRecords = () => {
+const useRecords = () => {
   const [records, setRecords] = useState<RecordItem[]>([]);
   useEffect(() => {
     setRecords(JSON.parse(window.localStorage.getItem('records') || '[]'));
@@ -24,9 +24,16 @@ export const useRecords = () => {
   useUpdate(() => {
     window.localStorage.setItem('records', JSON.stringify(records));
   }, [records]);
+  const findRecord = (id: number) => records.filter(item => item.id === id)[0];
   const addRecords = (record: RecordItem) => {
     setRecords([...records, record]);
   };
-
-  return {records, setRecords, addRecords};
+  const updateRecord = (id: number, obj: Partial<RecordItem>) => {
+    setRecords(records.map(record => record.id === id ? {...record, ...obj} : record))
+  }
+  const deleteRecord = (id: number) => {
+    setRecords(records.filter(record => record.id !== id))
+  }
+  return {records, setRecords, addRecords, findRecord, updateRecord, deleteRecord};
 };
+export {useRecords};

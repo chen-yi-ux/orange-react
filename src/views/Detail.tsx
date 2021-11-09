@@ -107,7 +107,7 @@ const Main = styled.div`
       font-size: 14px;
     }
 
-    > .item2 {
+    > a > .item2 {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -217,13 +217,15 @@ function Detail() {
               <span>{groupAmount(record)}</span>
             </div>
             {record.map(r =>
-              <Link className="item2" key={r.id} to={`/detail/edit/${r.id}`}>
-                <div className="name">
-                  <Icon name={r.label.svg}/>
-                  <span>{r.label.name}</span>
-                </div>
-                <div className="amount">
-                  {itemAmount(r)}
+              <Link to={`/detail/edit/${r.id}`} key={r.id}>
+                <div className="item2">
+                  <div className="name">
+                    <Icon name={r.label.svg}/>
+                    <span>{r.label.name}</span>
+                  </div>
+                  <div className="amount">
+                    {itemAmount(r)}
+                  </div>
                 </div>
               </Link>
             )}

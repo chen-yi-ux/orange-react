@@ -157,8 +157,6 @@ const LabelAdd = () => {
   const onAddLabel = () => {
     addLabel(newLabel);
   };
-  console.log('newLabel:');
-  console.log(newLabel);
   return (
     <Wrapper>
       <Header>

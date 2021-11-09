@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import {DatePicker} from 'components';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import dayjs from 'dayjs';
+import {useParams} from 'react-router-dom';
+import {RecordItem, useRecords} from '../hooks/useRecords';
 
 const All = styled.div`
   height: 100vh;
@@ -73,33 +75,40 @@ const Main = styled.div`
       padding-right: 10px;
     }
   }
+
   > .content {
     height: calc(100% - 80px);
-    > .xxx{
+
+    > .xxx {
       padding: 0 10px;
       flex-grow: 1;
-      > .item{
+
+      > .item {
         height: 60px;
         display: flex;
         align-items: center;
         padding: 0 10px;
         padding-top: 12px;
         border-bottom: 1px solid #e3e3e9;
-        > .item-wrapper{
+
+        > .item-wrapper {
           display: flex;
           justify-content: space-between;
           align-items: center;
           width: 70px;
+
           > .icon {
             width: 24px;
             height: 24px;
           }
+
           > span {
             padding-right: 5px;
             font-size: 18px;
           }
         }
-        > .input{
+
+        > .input {
           color: black;
           padding-left: 10px;
           font-size: 20px;
@@ -109,7 +118,8 @@ const Main = styled.div`
         }
       }
     }
-    > .footer{
+
+    > .footer {
       height: 10%;
       width: 100%;
       background: #fbfbfc;
@@ -121,7 +131,8 @@ const Main = styled.div`
       position: fixed;
       left: 0;
       bottom: 0;
-      > .save{
+
+      > .save {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -132,7 +143,8 @@ const Main = styled.div`
         background: #FF983B;
         color: white;
       }
-      > .delete{
+
+      > .delete {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -146,20 +158,33 @@ const Main = styled.div`
     }
   }
 `;
+type Id = {
+  id: string
+}
 const RecordEdit: React.FC = () => {
-  return (
+  const {findRecord, updateRecord, deleteRecord} = useRecords();
+  let {id} = useParams<Id>();
+  const record = findRecord(parseInt(id));
+  const onClickBack = () => {
+    window.history.back();
+  };
+  const categoryMap = {'-': '支出', '+': '收入'};
+  const recordContent = (record: RecordItem) => (
     <All>
       <Header>
-        <Icon name="left"/>
-        <span>编辑支出</span>
+        <Icon name="left" onClick={onClickBack}/>
+        <span>编辑{categoryMap[record.category]}</span>
       </Header>
       <Main>
         <div className="money">
           <div className="label">
-            <Icon name="三餐"/>
-            <span>三餐</span>
+            <Icon name={record.label.svg}/>
+            <span>{record.label.name}</span>
           </div>
-          <span className="amount">98</span>
+          <input type="number" className="amount" value={record.amount}
+                 onChange={(e) => {
+                   updateRecord(parseInt(id), {amount: parseFloat(e.target.value)});
+                 }}/>
         </div>
         <div className="content">
           <div className="xxx">
@@ -169,7 +194,14 @@ const RecordEdit: React.FC = () => {
                 <span>时间</span>
               </div>
               <div className="input">
-                <DatePicker locale={locale} value={dayjs()}/>
+                <DatePicker locale={locale} value={dayjs(record.time)}
+                            onChange={(e) => {
+                              if (e === null) {
+                                updateRecord(parseInt(id), {time: dayjs()});
+                              } else {
+                                updateRecord(parseInt(id), {time: e});
+                              }
+                            }}/>
               </div>
             </div>
             <div className="item">
@@ -177,16 +209,24 @@ const RecordEdit: React.FC = () => {
                 <Icon name="note"/>
                 <span>备注</span>
               </div>
-              <input type="text" className="input"/>
+              <input type="text" className="input" value={record.note}
+                     onChange={(e) => {
+                       updateRecord(parseInt(id), {note: e.target.value});
+                     }}/>
             </div>
           </div>
           <div className="footer">
-            <div className="save">保存</div>
-            <div className="delete">删除</div>
+            <div className="save" onClick={onClickBack}>保存</div>
+            <div className="delete" onClick={() => deleteRecord(parseInt(id))}>删除</div>
           </div>
         </div>
       </Main>
     </All>
+  );
+  return (
+    <div>
+      {record ? recordContent(record) : <div>record 不存在</div>}
+    </div>
   );
 };
 
