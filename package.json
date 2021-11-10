@@ -1,6 +1,7 @@
 {
   "name": "orange-react",
   "version": "0.1.0",
+  "homepage": "https://chen-yi-ux.github.io/orange-react-website/",
   "private": true,
   "dependencies": {
     "@babel/core": "7.12.3",
