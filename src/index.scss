@@ -16,6 +16,10 @@ a{
   color: inherit;
 }
 body{
+  max-width: 500px;
+  margin: 0 auto !important;
+}
+body{
   font-family: $font-hei;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -30,5 +34,7 @@ body{
 .mmm{
   height: 100vh;
   //padding-bottom: 5px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 

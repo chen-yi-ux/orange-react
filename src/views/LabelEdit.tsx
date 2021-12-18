@@ -34,6 +34,7 @@ const Header = styled.div`
       font-size: 20px;
       height: 2.2em;
       border: 1px solid black;
+      cursor: default;
 
       &.income {
         border-radius: 15px 0 0 15px;
@@ -95,10 +96,11 @@ const Button = styled.div`
   font-size: 18px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   height: 75px;
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  //position: fixed;
+  //left: 0;
+  //bottom: 0;
   width: 100%;
+  cursor: default;
   > a {
     display: flex;
     justify-content: center;

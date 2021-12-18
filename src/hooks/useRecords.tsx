@@ -33,6 +33,7 @@ const useRecords = () => {
   }
   const deleteRecord = (id: number) => {
     setRecords(records.filter(record => record.id !== id))
+    window.history.back();
   }
   return {records, setRecords, addRecords, findRecord, updateRecord, deleteRecord};
 };

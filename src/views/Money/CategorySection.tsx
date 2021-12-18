@@ -15,6 +15,7 @@ const Wrapper = styled.section`
       justify-content: center;
       align-items: center;
       position: relative;
+      cursor: default;
 
       &.selected {
         color: #FF983B;

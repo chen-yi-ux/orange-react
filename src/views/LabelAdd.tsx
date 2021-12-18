@@ -40,6 +40,7 @@ const Header = styled.div`
     align-items: center;
     font-size: 16px;
     color: white;
+    cursor: default;
   }
 `;
 const Main = styled.div`

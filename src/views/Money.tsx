@@ -9,21 +9,20 @@ import {LabelSection} from './Money/LabelSection';
 import dayjs from 'dayjs';
 import {useRecords} from '../hooks/useRecords';
 import {createId} from '../lib/createId';
-// import dayjs from 'dayjs';
 
 
 const Header = styled.section`
   height: 110px;
-  position: fixed;
-  left: 0;
-  top: 0;
+  //position: fixed;
+  //left: 0;
+  //top: 0;
   width: 100%;
 `;
 const Main = styled.section`
   height: calc(100% - 110px);
   padding: 0 14px;
-  position: fixed;
-  left: 0;
+  //position: fixed;
+  //left: 0;
   top: 110px;
   width: 100%;
 `;
@@ -33,10 +32,11 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  //position: fixed;
+  //left: 0;
+  //bottom: 0;
   width: 100%;
+
   > button {
     width: 40%;
     height: 80%;
@@ -63,7 +63,8 @@ const defaultRecord = {
   time: dayjs(),
   note: '',
   label: {name: '', svg: '', category: '-'} as Label
-}
+};
+
 function Money() {
   const [record, setRecord] = useState(defaultRecord);
   const onChange = (obj: Partial<typeof record>) => {
@@ -74,13 +75,16 @@ function Money() {
   };
   const {addRecords} = useRecords();
   const Save = () => {
-    if(record.label.svg === ''){
-      window.alert('选一下分类啦');
-    }else {
+    if (record.amount <= 0) {
+      window.alert('金额要大于0哦');
+    } else if (record.label.svg === '') {
+      window.alert('分类要选哦');
+    } else {
+      console.log(record.amount);
       record.id = createId();
       addRecords(record);
-      window.alert('保存成功');
       setRecord(defaultRecord);
+      window.history.back();
     }
   };
   return (

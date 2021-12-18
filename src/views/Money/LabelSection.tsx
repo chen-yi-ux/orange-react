@@ -21,7 +21,7 @@ const Wrapper = styled.section`
 
   > .content {
     overflow: auto;
-    height: 227px; //待定
+    height: 210px; //待定
 
     > ul {
       display: flex;
@@ -34,6 +34,7 @@ const Wrapper = styled.section`
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: default;
 
         > div {
           display: flex;

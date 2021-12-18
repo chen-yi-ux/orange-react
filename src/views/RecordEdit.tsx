@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {DatePicker} from 'components';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import dayjs from 'dayjs';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import {RecordItem, useRecords} from '../hooks/useRecords';
 
 const All = styled.div`
@@ -78,6 +78,7 @@ const Main = styled.div`
 
   > .content {
     height: calc(100% - 80px);
+    position: relative;
 
     > .xxx {
       padding: 0 10px;
@@ -128,9 +129,10 @@ const Main = styled.div`
       align-items: center;
       padding: 0 10px;
       font-size: 24px;
-      position: fixed;
-      left: 0;
-      bottom: 0;
+      position: absolute;
+      //position: fixed;
+      //left: 0;
+      bottom: 8px;
 
       > .save {
         display: flex;
@@ -142,6 +144,7 @@ const Main = styled.div`
         border-radius: 10px;
         background: #FF983B;
         color: white;
+        cursor: default;
       }
 
       > .delete {
@@ -154,6 +157,7 @@ const Main = styled.div`
         border-radius: 10px;
         background: #FAEEF0;
         color: #D94D68;
+        cursor: default;
       }
     }
   }
@@ -165,8 +169,9 @@ const RecordEdit: React.FC = () => {
   const {findRecord, updateRecord, deleteRecord} = useRecords();
   let {id} = useParams<Id>();
   const record = findRecord(parseInt(id));
+  const history = useHistory();
   const onClickBack = () => {
-    window.history.back();
+    history.replace('/detail')
   };
   const categoryMap = {'-': '支出', '+': '收入'};
   const recordContent = (record: RecordItem) => (
